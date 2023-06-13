@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
+use App\View\Components\GuestLayout;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('games.index'));
 });
 
 Route::get('/dashboard', function () {
@@ -28,4 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::resource('games', GameController::class)
+    ->only(['index']);
+
+Route::resource('games', GameController::class)
+    ->only(['store', 'create', 'destroy', 'edit', 'update'])
+    ->middleware(['auth', 'verified']);
+
+Route::get('/games/my-games', [GameController::class, 'myGames'])->middleware(['auth', 'verified'])->name('games.myGames');
+
+require __DIR__ . '/auth.php';

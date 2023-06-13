@@ -9,10 +9,16 @@
 
 ## Setup
 
+.env -> DB_CONNECTION=sqlite
+
 1 - composer install
+
 2 - php artisan migrate
+
 3 - php artisan serve
+
 4 - npm install
+
 5 - npm run dev
 
 ## About Laravel
